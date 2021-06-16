@@ -178,7 +178,7 @@ type ListingResult struct {
 	GroupingLevel string        `json:"GroupingLevel"`
 }
 
-func GetSubAreaSearchResponse(location string) SubAreaSearchResponse{
+func getSubAreaSearchResponse(location string) SubAreaSearchResponse{
 
     req, _ := http.NewRequest("GET", fmt.Sprintf("https://api2.realtor.ca/Location.svc/SubAreaSearch?Area=%s&ApplicationId=1&CultureId=1&CurrentPage=1", location), nil)
     req.Header.Add("referer", "https://www.realtor.ca/");
@@ -205,7 +205,7 @@ func GetSubAreaSearchResponse(location string) SubAreaSearchResponse{
     return subAreaSearchResponse
 }
 
-func GetListings(geoId string) ListingResult{
+func getListings(geoId string) ListingResult{
 
     data := url.Values{}
     data.Set("GeoIds", geoId);
@@ -244,6 +244,6 @@ func GetListings(geoId string) ListingResult{
 }
 
 func GetRealtorData(location string) ListingResult{
-	locationData := GetSubAreaSearchResponse(url.QueryEscape(location))
-	return GetListings(locationData.SubArea[0].GEOID)
+	locationData := getSubAreaSearchResponse(url.QueryEscape(location))
+	return getListings(locationData.SubArea[0].GEOID)
 }
