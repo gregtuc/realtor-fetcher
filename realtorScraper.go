@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -239,6 +240,12 @@ func getListings(geoId string) ListingResult{
     if err != nil {
         panic(err)
     }
+
+	if res.StatusCode != http.StatusOK {
+		log.Fatal("Unexpected Status", res.Status)
+	} else {
+		fmt.Println("Success.", res.Status)
+	}
 
     return listingResult
 }
